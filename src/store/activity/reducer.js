@@ -1,12 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit"
 import {
     getActivities,
+    getActivityDetail,
     createActivity,
     deleteActivity
 } from "./action"
 
 const initialState = {
     activities: [],
+    detail: {
+        _id: null,
+        name: null,
+        todos: []
+    },
     isLoading: false,
     isError: false,
     message: ''
@@ -36,6 +42,23 @@ export const activitySlice = createSlice({
         })
         .addCase(getActivities.rejected, (state, action) => {
             state.activities = []
+            state.isLoading = false
+            state.isError = true
+            state.message = action.payload
+        })
+        
+        // getActivityDetail
+        .addCase(getActivityDetail.pending, state => {
+            state.isLoading = true
+        })
+        .addCase(getActivityDetail.fulfilled, (state, action) => {
+            state.detail = action.payload
+            state.isLoading = false
+            state.isError = false
+            state.message = ''
+        })
+        .addCase(getActivityDetail.rejected, (state, action) => {
+            state.detail = null
             state.isLoading = false
             state.isError = true
             state.message = action.payload

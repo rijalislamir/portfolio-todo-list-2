@@ -20,6 +20,21 @@ export const getActivities = createAsyncThunk(
     }
 )
 
+export const getActivityDetail = createAsyncThunk(
+    'activity/detail',
+    async ({ id }, thunkAPI) => {
+        try {
+            const response = await axios.get(`${import.meta.env.VITE_BASE_API}/api/activities/${id}`)
+
+            return response.data
+        } catch (error) {
+            const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+
+            return thunkAPI.rejectWithValue(message)
+        }
+    }
+)
+
 export const createActivity = createAsyncThunk(
     'activity/create',
     async (_, thunkAPI) => {
