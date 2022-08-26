@@ -52,6 +52,8 @@ nav {
 .activity-item {
     border: 2px solid black;
     border-radius: .7rem;
+    display: flex;
+    justify-content: space-between;
     padding: 1rem;
 }
 

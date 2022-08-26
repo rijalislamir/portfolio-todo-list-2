@@ -1,5 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from "axios"
+import { reset as authReset } from './reducer'
+import { reset as activityReset } from '../activity/reducer'
 
 export const registerUser = createAsyncThunk(
     'auth/register',
@@ -37,5 +39,10 @@ export const login = createAsyncThunk(
 
 export const logout = createAsyncThunk(
     'auth/logout',
-    async () => await localStorage.removeItem('user')
+    async (_, thunkAPI) => {
+        localStorage.removeItem('user')
+
+        thunkAPI.dispatch(authReset())
+        thunkAPI.dispatch(activityReset())
+    }
 )

@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { getActivities, createActivity } from "./action"
+import {
+    getActivities,
+    createActivity,
+    deleteActivity
+} from "./action"
 
 const initialState = {
     activities: [],
@@ -11,6 +15,14 @@ const initialState = {
 export const activitySlice = createSlice({
     name: 'activity',
     initialState,
+    reducers: {
+        reset: state => {
+            state.activities = [],
+            state.isLoading = false,
+            state.isError = false,
+            state.message = ''
+        }
+    },
     extraReducers: builder => builder
         // getActivities
         .addCase(getActivities.pending, state => {
@@ -43,6 +55,23 @@ export const activitySlice = createSlice({
             state.isError = true
             state.message = action.payload
         })
+        
+        // deleteActivity
+        .addCase(deleteActivity.pending, state => {
+            state.isLoading = true
+        })
+        .addCase(deleteActivity.fulfilled, state => {
+            state.isLoading = false
+            state.isError = false
+            state.message = ''
+        })
+        .addCase(deleteActivity.rejected, (state, action) => {
+            state.isLoading = false
+            state.isError = true
+            state.message = action.payload
+        })
 })
+
+export const { reset } = activitySlice.actions
 
 export default activitySlice.reducer
