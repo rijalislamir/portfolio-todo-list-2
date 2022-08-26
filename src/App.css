@@ -37,6 +37,18 @@ nav {
     gap: .5rem;
 }
 
+.activity-item-btn {
+    border: 3px dashed black;
+    border-radius: .7rem;
+    cursor: pointer;
+    text-align: center;
+    padding: 1rem;
+}
+
+.activity-item-btn:hover {
+    background-color: rgb(220, 220, 220);
+}
+
 .activity-item {
     border: 2px solid black;
     border-radius: .7rem;
