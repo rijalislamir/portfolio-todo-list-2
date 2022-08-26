@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { registerUser } from '../store/auth/reducer'
+import { registerUser } from '../store/auth/action'
 
 const Register = () => {
     const dispatch = useDispatch()

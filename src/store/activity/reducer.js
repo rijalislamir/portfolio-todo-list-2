@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-import axios from 'axios'
+import { createSlice } from "@reduxjs/toolkit"
+import { getActivities } from "./action"
 
 const initialState = {
     activities: [],
@@ -7,22 +7,6 @@ const initialState = {
     isError: false,
     message: ''
 }
-
-export const getActivities = createAsyncThunk(
-    'activity/get',
-    async (_, thunkAPI) => {
-        try {
-            const token = thunkAPI.getState().auth.user.token
-            const response = await axios.get(`${import.meta.env.VITE_BASE_LOCAL_API}/api/activities`, { headers: { Authorization: `Bearer ${token}` }})
-
-            return response.data
-        } catch (error) {
-            const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
-
-            return thunkAPI.rejectWithValue(message)
-        }
-    }
-)
 
 export const activitySlice = createSlice({
     name: 'activity',
