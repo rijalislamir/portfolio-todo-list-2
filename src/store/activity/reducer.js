@@ -8,11 +8,7 @@ import {
 
 const initialState = {
     activities: [],
-    detail: {
-        _id: null,
-        name: null,
-        todos: []
-    },
+    detail: { _id: null, name: null, todos: [] },
     isLoading: false,
     isError: false,
     message: ''
@@ -24,6 +20,7 @@ export const activitySlice = createSlice({
     reducers: {
         reset: state => {
             state.activities = [],
+            state.detail = { _id: null, name: null, todos: [] },
             state.isLoading = false,
             state.isError = false,
             state.message = ''
