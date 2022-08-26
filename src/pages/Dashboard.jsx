@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { logout } from '../store/auth/action'
 import { getActivities } from '../store/activity/action'
+import Header from '../components/Header'
+import ActivityList from '../components/ActivityList'
 
 const Dashboard = () => {
     const dispatch = useDispatch()
@@ -18,13 +19,11 @@ const Dashboard = () => {
         dispatch(getActivities())
     }, [])
 
-    const onLogout = () => {
-        dispatch(logout())
-        navigate('/')
-    }
-
     return (
-        <div>Dashboard <button onClick={onLogout}>Logout</button></div>
+        <>
+            <Header />
+            <ActivityList />
+        </>
     )
 }
 

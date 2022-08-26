@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { registerUser } from '../store/auth/action'
+import Header from '../components/Header'
 
 const Register = () => {
     const dispatch = useDispatch()
@@ -48,27 +49,29 @@ const Register = () => {
     }
 
     return (
-        <div>
-            <div>
-                <h1>Register</h1>
+        <>
+            <Header />
 
-                <form onSubmit={onFormSubmit}>
-                    <div>
+            <section className='container'>
+                <h2>Register</h2>
+
+                <form className='input-form' onSubmit={onFormSubmit}>
+                    <div className='input-group'>
                         <label htmlFor="name">Name</label>
                         <input type="text" id='name' name='name' value={name} onChange={onInputChange} />
                     </div>
                     
-                    <div>
+                    <div className='input-group'>
                         <label htmlFor="email">Email</label>
                         <input type="text" id='email' name='email' value={email} onChange={onInputChange} />
                     </div>
                     
-                    <div>
+                    <div className='input-group'>
                         <label htmlFor="password">Password</label>
                         <input type="text" id='password' name='password' value={password} onChange={onInputChange} />
                     </div>
                     
-                    <div>
+                    <div className='input-group'>
                         <label htmlFor="password2">Confirm Password</label>
                         <input type="text" id='password2' name='password2' value={password2} onChange={onInputChange} />
                     </div>
@@ -76,13 +79,13 @@ const Register = () => {
                     {isError && <div>{message}</div>}
 
                     <div>
-                        <button type='submit'>Register</button>
+                        <button className='dark-btn' type='submit'>Register</button>
                     </div>
                 </form>
 
                 <div>Have an account? <Link to='/login'><b>Login</b></Link></div>
-            </div>
-        </div>
+            </section>
+        </>
     )
 }
 

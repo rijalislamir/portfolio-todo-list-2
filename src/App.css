@@ -1,0 +1,83 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+
+a:visited {
+    color: unset;
+    text-decoration: none;
+}
+
+header {
+    background-color: black;
+    color: white;
+    padding: 1rem;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1035px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.container {
+    margin: 0 auto;
+    max-width: 1035px;
+    padding: 1rem;
+}
+
+.activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.activity-item {
+    border: 2px solid black;
+    border-radius: .7rem;
+    padding: 1rem;
+}
+
+button {
+    background-color: transparent;
+    border-radius: 20rem;
+    cursor: pointer;
+    padding: 1rem 2rem;
+}
+
+.sign-menu {
+    display: flex;
+    gap: 1rem;
+}
+
+.light-btn {
+    background-color: ghostwhite;
+    color: black;
+}
+
+.dark-btn {
+    background-color: #202020;
+    color: white;
+}
+
+.input-form {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+input[type=text] {
+    border-radius: 5px;
+    height: 2.5rem;
+    padding: .5rem;
+}

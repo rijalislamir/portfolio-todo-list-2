@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { login } from '../store/auth/action'
+import Header from '../components/Header'
 
 const Login = () => {
     const dispatch = useDispatch()
@@ -37,17 +38,19 @@ const Login = () => {
     }
 
     return (
-        <div>
-            <div>
-                <h1>Login</h1>
+        <>
+            <Header />
 
-                <form onSubmit={onFormSubmit}>
-                    <div>
+            <section className='container'>
+                <h2>Login</h2>
+
+                <form className='input-form' onSubmit={onFormSubmit}>
+                    <div className='input-group'>
                         <label htmlFor="email">Email</label>
                         <input type="text" id='email' name='email' value={email} onChange={onInputChange} />
                     </div>
                     
-                    <div>
+                    <div className='input-group'>
                         <label htmlFor="password">Password</label>
                         <input type="text" id='password' name='password' value={password} onChange={onInputChange} />
                     </div>
@@ -55,13 +58,13 @@ const Login = () => {
                     {isError && <div>{message}</div>}
 
                     <div>
-                        <button type='submit'>Login</button>
+                        <button className='dark-btn' type='submit'>Login</button>
                     </div>
                 </form>
 
                 <div>Don't have an account? <b><Link to='/register'>Register</Link></b></div>
-            </div>
-        </div>
+            </section>
+        </>
     )
 }
 
