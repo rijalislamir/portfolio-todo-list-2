@@ -59,7 +59,7 @@ const ActivityDetail = () => {
                             <h3>{todo.name}</h3>
                         </div>
 
-                        <span className='delete-icon' onClick={() => handleDeleteTodo(todo._id)}></span>
+                        <span className='trash-icon' onClick={() => handleDeleteTodo(todo._id)}></span>
                     </div>
                 )}
             </div>

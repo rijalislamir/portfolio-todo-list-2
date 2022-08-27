@@ -40,29 +40,43 @@ nav {
 }
 
 .activity-list {
-    display: flex;
-    flex-direction: column;
-    gap: .5rem;
-}
-
-.activity-item-btn {
-    border: 3px dashed black;
-    border-radius: .7rem;
-    cursor: pointer;
-    text-align: center;
-    padding: 1rem;
-}
-
-.activity-item-btn:hover {
-    background-color: rgb(220, 220, 220);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 150px;
+    grid-gap: .5rem;
+    grid-template-areas: "empty empty empty empty";
+    padding: 1rem 0;
 }
 
 .activity-item {
-    border: 2px solid black;
+    border: 3px solid black;
     border-radius: .7rem;
+    cursor: pointer;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     padding: 1rem;
+}
+
+.activity-item:hover {
+    background-color: rgb(220, 220, 220);
+    border: 3px solid black;
+}
+
+.add-activity {
+    background-color: black;
+    border: 3px dashed black;
+    color: white;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-activity:hover {
+    color: black;
+}
+
+.no-activity {
+    grid-area: empty;
 }
 
 button {
@@ -126,6 +140,7 @@ input[type=text] {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 1rem 0;
 }
 
 .back-icon {
@@ -144,8 +159,10 @@ input[type=text] {
     width: 40px;
 }
 
-.delete-icon {
-    background-image: url(/src/assets/img/delete.svg);
+.trash-icon {
+    background-image: url(/src/assets/img/trash.svg);
+    background-size: contain;
+    color: red;
     cursor: pointer;
     display: block;
     height: 30px;
@@ -156,6 +173,7 @@ input[type=text] {
     display: flex;
     flex-direction: column;
     gap: .5rem;
+    padding: 1rem 0;
 }
 
 .todo-item {
