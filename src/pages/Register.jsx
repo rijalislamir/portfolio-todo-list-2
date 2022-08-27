@@ -53,7 +53,7 @@ const Register = () => {
             <Header />
 
             <section className='container'>
-                <h2>Register</h2>
+                <h2 className='page-title'>Register</h2>
 
                 <form className='input-form' onSubmit={onFormSubmit}>
                     <div className='input-group'>
@@ -78,12 +78,12 @@ const Register = () => {
 
                     {isError && <div>{message}</div>}
 
-                    <div>
+                    <div className='submit-form'>
                         <button className='dark-btn' type='submit'>Register</button>
+                        <p>Have an account? <Link to='/login'><b>Login</b></Link></p>
                     </div>
                 </form>
 
-                <div>Have an account? <Link to='/login'><b>Login</b></Link></div>
             </section>
         </>
     )

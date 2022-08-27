@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getActivityDetail } from '../store/activity/action'
+import { reset as activityReset } from '../store/activity/reducer'
 import { createTodo, deleteTodo } from '../store/todo/action'
+
 
 const ActivityDetail = () => {
     const dispatch = useDispatch()
     const location = useLocation()
+    const navigate = useNavigate()
 
     const { detail } = useSelector(state => state.activity)
 
@@ -34,10 +37,15 @@ const ActivityDetail = () => {
         dispatch(deleteTodo({ id }))
     }
 
+    const handleGoBack = () => {
+        dispatch(activityReset())
+        navigate('/')
+    }
+
     return (
         <section className='container'>
             <div className='activity-header'>
-                <Link to='/'><span className='back-icon'></span></Link>
+                <span className='back-icon' onClick={handleGoBack}></span>
                 <h2>{detail.name}</h2>
                 <span className='plus-icon' onClick={handleCreateTodo}></span>
             </div>

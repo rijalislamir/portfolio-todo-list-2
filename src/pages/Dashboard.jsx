@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { reset as activityReset } from '../store/activity/reducer'
 import { getActivities } from '../store/activity/action'
 import Header from '../components/Header'
 import ActivityList from '../components/ActivityList'
@@ -17,7 +16,6 @@ const Dashboard = () => {
     }, [user, navigate])
 
     useEffect(() => {
-        dispatch(activityReset())
         dispatch(getActivities())
     }, [])
 

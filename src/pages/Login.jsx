@@ -42,7 +42,7 @@ const Login = () => {
             <Header />
 
             <section className='container'>
-                <h2>Login</h2>
+                <h2 className='page-title'>Login</h2>
 
                 <form className='input-form' onSubmit={onFormSubmit}>
                     <div className='input-group'>
@@ -57,12 +57,11 @@ const Login = () => {
 
                     {isError && <div>{message}</div>}
 
-                    <div>
+                    <div className='submit-form'>
                         <button className='dark-btn' type='submit'>Login</button>
+                        <p>Don't have an account? <b><Link to='/register'>Register</Link></b></p>
                     </div>
                 </form>
-
-                <div>Don't have an account? <b><Link to='/register'>Register</Link></b></div>
             </section>
         </>
     )

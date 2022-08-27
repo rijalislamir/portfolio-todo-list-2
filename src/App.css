@@ -34,6 +34,11 @@ nav {
     padding: 1rem;
 }
 
+.page-title {
+    text-align: center;
+    padding: 1rem 0;
+}
+
 .activity-list {
     display: flex;
     flex-direction: column;
@@ -64,6 +69,8 @@ button {
     background-color: transparent;
     border-radius: 20rem;
     cursor: pointer;
+    font-size: medium;
+    font-weight: 600;
 }
 
 .sign-menu {
@@ -72,21 +79,36 @@ button {
 }
 
 .light-btn {
-    background-color: ghostwhite;
+    background-color: white;
+    border: 5px solid white;
     color: black;
     padding: 1rem 2rem;
 }
 
+.light-btn:hover {
+    background-color: black;
+    border: 5px solid white;
+    color: white;
+}
+
 .dark-btn {
     background-color: #202020;
+    border: 5px solid #202020;
     color: white;
     padding: 1rem 2rem;
+}
+
+.dark-btn:hover {
+    background-color: white;
+    border: 5px solid black;
+    color: black;
 }
 
 .input-form {
     display: flex;
     flex-direction: column;
     gap: .5rem;
+    padding: 1rem 0;
 }
 
 .input-group {
@@ -159,4 +181,12 @@ input[type=text] {
 
 .red {
     background-color: #ED4C5C;
+}
+
+.submit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem 0;
+    text-align: center;
 }
