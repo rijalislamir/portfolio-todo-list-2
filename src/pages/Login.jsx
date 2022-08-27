@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { login } from '../store/auth/action'
+import { reset as authReset } from '../store/auth/reducer'
 import Header from '../components/Header'
 
 const Login = () => {
@@ -9,6 +10,11 @@ const Login = () => {
     const navigate = useNavigate()
 
     const { user, isError, message } = useSelector(state => state.auth)
+    const [showPassword, setShowPassword] = useState('password')
+
+    useEffect(() => {
+        dispatch(authReset())
+    }, [])
 
     useEffect(() => {
         if (user) navigate('/')
@@ -37,6 +43,10 @@ const Login = () => {
         }))
     }
 
+    const toggleShowPassword = () => {
+        setShowPassword(prevState => prevState === 'password' ? 'text' : 'password')
+    }
+
     return (
         <>
             <Header />
@@ -47,15 +57,19 @@ const Login = () => {
                 <form className='input-form' onSubmit={onFormSubmit}>
                     <div className='input-group'>
                         <label htmlFor="email">Email</label>
-                        <input type="text" id='email' name='email' value={email} onChange={onInputChange} />
+                        <input type="email" id='email' name='email' value={email} onChange={onInputChange} />
                     </div>
                     
                     <div className='input-group'>
                         <label htmlFor="password">Password</label>
-                        <input type="text" id='password' name='password' value={password} onChange={onInputChange} />
+                        <input type={showPassword} id='password' name='password' value={password} onChange={onInputChange} />
+                        <span
+                            className={showPassword === 'password' ? 'eye-icon' : 'eye-slash-icon'}
+                            onClick={toggleShowPassword}>
+                        </span>
                     </div>
 
-                    {isError && <div>{message}</div>}
+                    {isError && <div className='error-message'>{message}</div>}
 
                     <div className='submit-form'>
                         <button className='dark-btn' type='submit'>Login</button>

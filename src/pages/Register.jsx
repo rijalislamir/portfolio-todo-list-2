@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { registerUser } from '../store/auth/action'
+import { reset as authReset } from '../store/auth/reducer'
 import Header from '../components/Header'
 
 const Register = () => {
@@ -9,6 +10,11 @@ const Register = () => {
     const navigate = useNavigate()
 
     const { user, isError, message } = useSelector(state => state.auth)
+    const [showPassword, setShowPassword] = useState('password')
+
+    useEffect(() => {
+        dispatch(authReset())
+    }, [])
 
     useEffect(() => {
         if (user) {
@@ -48,6 +54,10 @@ const Register = () => {
         }))
     }
 
+    const toggleShowPassword = () => {
+        setShowPassword(prevState => prevState === 'password' ? 'text' : 'password')
+    }
+
     return (
         <>
             <Header />
@@ -63,20 +73,28 @@ const Register = () => {
                     
                     <div className='input-group'>
                         <label htmlFor="email">Email</label>
-                        <input type="text" id='email' name='email' value={email} onChange={onInputChange} />
+                        <input type="email" id='email' name='email' value={email} onChange={onInputChange} />
                     </div>
                     
                     <div className='input-group'>
                         <label htmlFor="password">Password</label>
-                        <input type="text" id='password' name='password' value={password} onChange={onInputChange} />
+                        <input type={showPassword} id='password' name='password' value={password} onChange={onInputChange} />
+                        <span
+                            className={showPassword === 'password' ? 'eye-icon' : 'eye-slash-icon'}
+                            onClick={toggleShowPassword}>
+                        </span>
                     </div>
                     
                     <div className='input-group'>
                         <label htmlFor="password2">Confirm Password</label>
-                        <input type="text" id='password2' name='password2' value={password2} onChange={onInputChange} />
+                        <input type={showPassword} id='password2' name='password2' value={password2} onChange={onInputChange} />
+                        <span
+                            className={showPassword === 'password' ? 'eye-icon' : 'eye-slash-icon'}
+                            onClick={toggleShowPassword}>
+                        </span>
                     </div>
 
-                    {isError && <div>{message}</div>}
+                    {isError && <div className='error-message'>{message}</div>}
 
                     <div className='submit-form'>
                         <button className='dark-btn' type='submit'>Register</button>

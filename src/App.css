@@ -128,12 +128,23 @@ button {
 .input-group {
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
-input[type=text] {
+input[type=text],
+input[type=email],
+input[type=password] {
     border-radius: 5px;
+    font-size: 1rem;
     height: 2.5rem;
     padding: .5rem;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
 
 .activity-header {
@@ -162,11 +173,34 @@ input[type=text] {
 .trash-icon {
     background-image: url(/src/assets/img/trash.svg);
     background-size: contain;
-    color: red;
     cursor: pointer;
     display: block;
     height: 30px;
     width: 30px;
+}
+
+.eye-icon {
+    background-image: url(/src/assets/img/eye.svg);
+    background-size: contain;
+    cursor: pointer;
+    display: block;
+    height: 25px;
+    width: 25px;
+    position: absolute;
+    right: 1rem;
+    top: 1.6rem;
+}
+
+.eye-slash-icon {
+    background-image: url(/src/assets/img/eye-slash.svg);
+    background-size: contain;
+    cursor: pointer;
+    display: block;
+    height: 25px;
+    width: 25px;
+    position: absolute;
+    right: 1rem;
+    top: 1.6rem;
 }
 
 .todo-list {
@@ -207,4 +241,8 @@ input[type=text] {
     gap: 1rem;
     padding: 1rem 0;
     text-align: center;
+}
+
+.error-message {
+    color: red;
 }
