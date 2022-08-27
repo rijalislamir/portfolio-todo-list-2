@@ -106,8 +106,8 @@ button {
 }
 
 .dark-btn {
-    background-color: #202020;
-    border: 5px solid #202020;
+    background-color: black;
+    border: 5px solid black;
     color: white;
     padding: 1rem 2rem;
 }
@@ -245,4 +245,44 @@ input:-webkit-autofill:active{
 
 .error-message {
     color: red;
+}
+
+.backdrop {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.modal {
+    width: 75%;
+    min-width: 300px;
+    max-width: 1000px;
+}
+
+.modal-header {
+    background-color: #333333;
+    border-radius: 1rem 1rem 0 0;
+    color: white;
+    padding: 1.5rem 1rem;
+    text-align: center;
+}
+
+.modal-body {
+    background-color: white;
+    padding: 3rem 1rem;
+    text-align: center;
+}
+
+.modal-footer {
+    background-color: #cccccc;
+    border-radius: 0 0 1rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
 }
