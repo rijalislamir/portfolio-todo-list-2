@@ -6,12 +6,13 @@ import {
     deleteActivity
 } from '../store/activity/action'
 import Backdrop from './Backdrop'
+import { MoonLoader } from 'react-spinners'
 
 const ActivityList = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const { activities } = useSelector(state => state.activity)
+    const { activities, isLoading } = useSelector(state => state.activity)
     const [show, setShow] = useState(false)
     const [activityToDelete, setActivityToDelete] = useState({
         id: null,
@@ -50,30 +51,34 @@ const ActivityList = () => {
 
     return (
         <section className='container'>
-            <h2 className='page-title'>Activity</h2>
+            {isLoading
+                ? <MoonLoader cssOverride={{ margin: "0 auto" }} loading />
+                : <>
+                    <h2 className='page-title'>Activity</h2>
+                    <div className="activity-list">
+                        <div
+                            className={
+                                activities.length === 0
+                                    ? 'activity-item add-activity no-activity'
+                                    : 'activity-item add-activity'
+                            }
+                            onClick={handleCreateActivity}
+                        >
+                            <h3>Create Activity</h3>
+                        </div>
 
-            <div className='activity-list'>
-                <div
-                    className={
-                        activities.length === 0
-                            ? 'activity-item add-activity no-activity'
-                            : 'activity-item add-activity'
-                    }
-                    onClick={handleCreateActivity}
-                >
-                    <h3>Create Activity</h3>
-                </div>
-
-                {activities.map((activity, i) => 
-                    <div className='activity-item' onClick={() => handleClickDetail(activity._id)} key={i}>
-                        <h3>{activity.name}</h3>
-                        <span
-                            className='trash-icon'
-                            onClick={e => handleOpenModal(e, activity._id, activity.name)}
-                        ></span>
-                    </div>)
-                }
-            </div>
+                        {activities.map((activity, i) => 
+                            <div className='activity-item' onClick={() => handleClickDetail(activity._id)} key={i}>
+                                <h3>{activity.name}</h3>
+                                <span
+                                    className='trash-icon'
+                                    onClick={e => handleOpenModal(e, activity._id, activity.name)}
+                                ></span>
+                            </div>)
+                        }
+                    </div>
+                </>
+            }
 
             <Backdrop
                 show={show}

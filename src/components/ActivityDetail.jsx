@@ -5,6 +5,7 @@ import { getActivityDetail, updateActivity } from '../store/activity/action'
 import { reset as activityReset } from '../store/activity/reducer'
 import { createTodo, deleteTodo } from '../store/todo/action'
 import Backdrop from './Backdrop'
+import { MoonLoader } from 'react-spinners'
 
 const ActivityDetail = () => {
     const dispatch = useDispatch()
@@ -23,7 +24,7 @@ const ActivityDetail = () => {
     const inputRef = useRef(null)
 
     useEffect(() => {
-        if (detail !== null && !isLoading) setName(detail.name)
+        if (detail !== null) setName(detail.name)
     }, [detail])
 
     useEffect(() => {
@@ -49,7 +50,7 @@ const ActivityDetail = () => {
     const handleClickOutsideInput = e => {
         if (inputRef.current !== null && !inputRef.current.contains(e.target)) {
             setEdit(prevState => !prevState)
-            dispatch(updateActivity({ id: detail._id, name }))
+            if (name !== detail.name) dispatch(updateActivity({ id: detail._id, name }))
         }
     }
 
@@ -98,33 +99,36 @@ const ActivityDetail = () => {
 
     return (
         <section className='container'>
-            {!isLoading &&
-            <div className='activity-header'>
-                <span className='back-icon' onClick={handleGoBack}></span>
-                {edit
-                    ? <input type='text' className='activity-name-input' value={name} onChange={handleOnchangeName} ref={inputRef} />
-                    : <h2 onClick={() => setEdit(prevState => !prevState)}>{detail.name}</h2>
-                }
-                <span className='plus-icon' onClick={handleCreateTodo}></span>
-            </div>
-            }
-
-            <div className="todo-list">
-                {detail.todos.map((todo, i) => 
-                    <div className='todo-item' key={i}>
-                        <div className='todo-item-edit'>
-                            <input type="checkbox" name="done" />
-                            <span className={handlePriority(todo.priority)}></span>
-                            <h3>{todo.name}</h3>
-                        </div>
-
-                        <span
-                            className='trash-icon'
-                            onClick={e => handleOpenModal(e, todo._id, todo.name)}
-                        ></span>
+            {isLoading
+                ? <MoonLoader cssOverride={{ margin: "0 auto" }} loading />
+                : <>
+                    <div className='activity-header'>
+                        <span className='back-icon' onClick={handleGoBack}></span>
+                        {edit
+                            ? <input type='text' className='activity-name-input' value={name} onChange={handleOnchangeName} ref={inputRef} />
+                            : <h2 onClick={() => setEdit(prevState => !prevState)}>{detail.name}</h2>
+                        }
+                        <span className='plus-icon' onClick={handleCreateTodo}></span>
                     </div>
-                )}
-            </div>
+
+                    <div className="todo-list">
+                        {detail.todos.map((todo, i) => 
+                            <div className='todo-item' key={i}>
+                                <div className='todo-item-edit'>
+                                    <input type="checkbox" name="done" />
+                                    <span className={handlePriority(todo.priority)}></span>
+                                    <h3>{todo.name}</h3>
+                                </div>
+
+                                <span
+                                    className='trash-icon'
+                                    onClick={e => handleOpenModal(e, todo._id, todo.name)}
+                                ></span>
+                            </div>
+                        )}
+                    </div>
+                </>
+            }
 
             <Backdrop
                 show={show}

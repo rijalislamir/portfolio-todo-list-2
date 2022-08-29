@@ -158,9 +158,6 @@ input:-webkit-autofill:active{
 input.activity-name-input,
 input.activity-name-input:focus {
     background-color: #eeeeee;
-    /* border-radius: 0; */
-    /* border: none; */
-    /* border-bottom: 2px solid black; */
     flex-grow: 1;
     font-size: 1.5rem !important;
     font-weight: 700;
