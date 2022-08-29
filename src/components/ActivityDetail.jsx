@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getActivityDetail } from '../store/activity/action'
+import { getActivityDetail, updateActivity } from '../store/activity/action'
 import { reset as activityReset } from '../store/activity/reducer'
 import { createTodo, deleteTodo } from '../store/todo/action'
 import Backdrop from './Backdrop'
@@ -11,17 +11,48 @@ const ActivityDetail = () => {
     const location = useLocation()
     const navigate = useNavigate()
 
-    const { detail } = useSelector(state => state.activity)
+    const { detail, isLoading } = useSelector(state => state.activity)
+    const [edit, setEdit] = useState(false)
+    const [name, setName] = useState('')
     const [show, setShow] = useState(false)
     const [todoToDelete, setTodoToDelete] = useState({
         id: null,
         name: ''
     })
 
+    const inputRef = useRef(null)
+
+    useEffect(() => {
+        if (detail !== null && !isLoading) setName(detail.name)
+    }, [detail])
+
     useEffect(() => {
         dispatch(getActivityDetail({ id: location.pathname.split('/').pop() }))
     }, [])
+
+    useEffect(() => {
+        document.addEventListener('click', handleClickOutsideInput, true)
+
+        return () => {
+            document.removeEventListener('click', handleClickOutsideInput, true)
+        }
+    })
+
+    useEffect(() => {
+        if (edit) inputRef.current.focus()
+    }, [edit])
     
+    const handleOnchangeName = e => {
+        setName(e.target.value)
+    }
+
+    const handleClickOutsideInput = e => {
+        if (inputRef.current !== null && !inputRef.current.contains(e.target)) {
+            setEdit(prevState => !prevState)
+            dispatch(updateActivity({ id: detail._id, name }))
+        }
+    }
+
     const handleCreateTodo = () => {
         dispatch(createTodo({
             name: 'New Todo',
@@ -67,11 +98,16 @@ const ActivityDetail = () => {
 
     return (
         <section className='container'>
+            {!isLoading &&
             <div className='activity-header'>
                 <span className='back-icon' onClick={handleGoBack}></span>
-                <h2>{detail.name}</h2>
+                {edit
+                    ? <input type='text' className='activity-name-input' value={name} onChange={handleOnchangeName} ref={inputRef} />
+                    : <h2 onClick={() => setEdit(prevState => !prevState)}>{detail.name}</h2>
+                }
                 <span className='plus-icon' onClick={handleCreateTodo}></span>
             </div>
+            }
 
             <div className="todo-list">
                 {detail.todos.map((todo, i) => 

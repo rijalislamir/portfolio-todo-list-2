@@ -3,6 +3,7 @@ import {
     getActivities,
     getActivityDetail,
     createActivity,
+    updateActivity,
     deleteActivity
 } from "./action"
 
@@ -76,6 +77,21 @@ export const activitySlice = createSlice({
             state.message = action.payload
         })
         
+        // updateActivity
+        .addCase(updateActivity.pending, state => {
+            state.isLoading = true
+        })
+        .addCase(updateActivity.fulfilled, state => {
+            state.isLoading = false
+            state.isError = false
+            state.message = ''
+        })
+        .addCase(updateActivity.rejected, (state, action) => {
+            state.isLoading = false
+            state.isError = true
+            state.message = action.payload
+        })
+
         // deleteActivity
         .addCase(deleteActivity.pending, state => {
             state.isLoading = true

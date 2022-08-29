@@ -57,6 +57,28 @@ export const createActivity = createAsyncThunk(
     }
 )
 
+export const updateActivity = createAsyncThunk(
+    'activity/update',
+    async (body, thunkAPI) => {
+        try {
+            const token = thunkAPI.getState().auth.user.token
+            const response = await axios.put(
+                `${import.meta.env.VITE_BASE_API}/api/activities/${body.id}`,
+                body,
+                { headers: { Authorization: `Bearer ${token}` }}
+            )
+
+            if (response.data) thunkAPI.dispatch(getActivityDetail({ id: body.id }))
+
+            return response.data
+        } catch (error) {
+            const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+
+            return thunkAPI.rejectWithValue(message)
+        }
+    }
+)
+
 export const deleteActivity = createAsyncThunk(
     'activity/delete',
     async ({ id }, thunkAPI) => {
