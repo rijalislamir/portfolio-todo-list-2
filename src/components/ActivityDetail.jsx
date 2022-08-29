@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getActivityDetail } from '../store/activity/action'
 import { reset as activityReset } from '../store/activity/reducer'
 import { createTodo, deleteTodo } from '../store/todo/action'
-
+import Backdrop from './Backdrop'
 
 const ActivityDetail = () => {
     const dispatch = useDispatch()
@@ -12,6 +12,11 @@ const ActivityDetail = () => {
     const navigate = useNavigate()
 
     const { detail } = useSelector(state => state.activity)
+    const [show, setShow] = useState(false)
+    const [todoToDelete, setTodoToDelete] = useState({
+        id: null,
+        name: ''
+    })
 
     useEffect(() => {
         dispatch(getActivityDetail({ id: location.pathname.split('/').pop() }))
@@ -33,13 +38,31 @@ const ActivityDetail = () => {
         if (priority === 'very-low') return 'priority-indicator purple'
     }
 
-    const handleDeleteTodo = id => {
-        dispatch(deleteTodo({ id }))
-    }
-
     const handleGoBack = () => {
         dispatch(activityReset())
         navigate('/')
+    }
+
+    const handleOpenModal = (e, id, name) => {
+        e.stopPropagation()
+        setTodoToDelete({
+            id,
+            name
+        })
+        setShow(true)
+    }
+
+    const handleCloseModal = () => {
+        setTodoToDelete({
+            id: null,
+            name: ''
+        })
+        setShow(false)
+    }
+
+    const handleDeleteTodo = id => {
+        dispatch(deleteTodo({ id }))
+        handleCloseModal()
     }
 
     return (
@@ -59,10 +82,29 @@ const ActivityDetail = () => {
                             <h3>{todo.name}</h3>
                         </div>
 
-                        <span className='trash-icon' onClick={() => handleDeleteTodo(todo._id)}></span>
+                        <span
+                            className='trash-icon'
+                            onClick={e => handleOpenModal(e, todo._id, todo.name)}
+                        ></span>
                     </div>
                 )}
             </div>
+
+            <Backdrop
+                show={show}
+                onClose={handleCloseModal}
+            >
+                <div className='modal' onClick={e => e.stopPropagation()}>
+                    <div className="modal-header">
+                        <h2>Delete Todo</h2>
+                    </div>
+                    <div className="modal-body">Are you sure want to delete <b>{todoToDelete.name}</b>?</div>
+                    <div className="modal-footer">
+                        <button className='dark-btn' onClick={handleCloseModal}>Cancel</button>
+                        <button className='light-btn' onClick={() => handleDeleteTodo(todoToDelete.id)}>Delete</button>
+                    </div>
+                </div>
+            </Backdrop>
         </section>
     )
 }

@@ -35,9 +35,17 @@ const ActivityList = () => {
         navigate(`/activity/${id}`)
     }
     
+    const handleCloseModal = () => {
+        setActivityToDelete({
+            id: null,
+            name: ''
+        })
+        setShow(false)
+    }
+    
     const handleDeleteActivity = id => {
         dispatch(deleteActivity({ id }))
-        setShow(false)
+        handleCloseModal()
     }
 
     return (
@@ -69,7 +77,7 @@ const ActivityList = () => {
 
             <Backdrop
                 show={show}
-                onClose={() => setShow(false)}
+                onClose={handleCloseModal}
             >
                 <div className='modal' onClick={e => e.stopPropagation()}>
                     <div className="modal-header">
@@ -77,7 +85,7 @@ const ActivityList = () => {
                     </div>
                     <div className="modal-body">Are you sure want to delete <b>{activityToDelete.name}</b>?</div>
                     <div className="modal-footer">
-                        <button className='dark-btn' onClick={() => setShow(false)}>Cancel</button>
+                        <button className='dark-btn' onClick={handleCloseModal}>Cancel</button>
                         <button className='light-btn' onClick={() => handleDeleteActivity(activityToDelete.id)}>Delete</button>
                     </div>
                 </div>
