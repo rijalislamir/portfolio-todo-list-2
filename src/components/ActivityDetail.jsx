@@ -1,9 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getActivityDetail, updateActivity } from '../store/activity/action'
 import { reset as activityReset } from '../store/activity/reducer'
-import { createTodo, deleteTodo } from '../store/todo/action'
+import {
+    createTodo,
+    updateTodo,
+    deleteTodo
+} from '../store/todo/action'
 import Backdrop from './Backdrop'
 import { MoonLoader } from 'react-spinners'
 
@@ -58,7 +62,8 @@ const ActivityDetail = () => {
         dispatch(createTodo({
             name: 'New Todo',
             activity: detail._id,
-            priority: 'very-high'
+            priority: 'very-high',
+            done: false
         }))
     }
 
@@ -97,6 +102,10 @@ const ActivityDetail = () => {
         handleCloseModal()
     }
 
+    const handleOnchangeCheckBox = todo => {
+        dispatch(updateTodo({ id: todo._id, activity: todo.activity, done: !todo.done }))
+    }
+
     return (
         <section className='container'>
             {isLoading
@@ -115,7 +124,7 @@ const ActivityDetail = () => {
                         {detail.todos.map((todo, i) => 
                             <div className='todo-item' key={i}>
                                 <div className='todo-item-edit'>
-                                    <input type="checkbox" name="done" />
+                                    <input type="checkbox" name="done" checked={todo.done} onChange={() => handleOnchangeCheckBox(todo)} />
                                     <span className={handlePriority(todo.priority)}></span>
                                     <h3>{todo.name}</h3>
                                 </div>

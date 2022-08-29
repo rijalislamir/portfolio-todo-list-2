@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import {
     createTodo,
+    updateTodo,
     deleteTodo
 } from './action'
 
@@ -31,6 +32,21 @@ export const todoSlice = createSlice({
             state.message = ''
         })
         .addCase(createTodo.rejected, (state, action) => {
+            state.isLoading = false
+            state.isError = false
+            state.message = action.payload
+        })
+        
+        // updateTodo
+        .addCase(updateTodo.pending, state => {
+            state.isLoading = true
+        })
+        .addCase(updateTodo.fulfilled, state => {
+            state.isLoading = false
+            state.isError = false
+            state.message = ''
+        })
+        .addCase(updateTodo.rejected, (state, action) => {
             state.isLoading = false
             state.isError = false
             state.message = action.payload
