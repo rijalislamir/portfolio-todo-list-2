@@ -7,7 +7,7 @@ export const registerUser = createAsyncThunk(
     'auth/register',
     async (data, thunkAPI) => {
         try {
-            const response = await axios.post(`${process.env.VITE_BASE_API}/api/users/register`, data)
+            const response = await axios.post(`${process.env.REACT_APP_BASE_API}/api/users/register`, data)
 
             if (response.data) localStorage.setItem('user', JSON.stringify(response.data))
 
@@ -24,7 +24,7 @@ export const login = createAsyncThunk(
     'auth/login',
     async (data, thunkAPI) => {
         try {
-            const response = await axios.post(`${process.env.VITE_BASE_API}/api/users/login`, data)
+            const response = await axios.post(`${process.env.REACT_APP_BASE_API}/api/users/login`, data)
 
             if (response.data) localStorage.setItem('user', JSON.stringify(response.data))
 
