@@ -8,7 +8,7 @@ export const createTodo = createAsyncThunk(
         try {
             const token = thunkAPI.getState().auth.user.token
             const response = await axios.post(
-                `${import.meta.env.VITE_BASE_API}/api/todos`,
+                `${process.env.VITE_BASE_API}/api/todos`,
                 body,
                 { headers: { Authorization: `Bearer ${token}` }}
             )
@@ -30,7 +30,7 @@ export const updateTodo = createAsyncThunk(
         try {
             const token = thunkAPI.getState().auth.user.token
             const response = await axios.put(
-                `${import.meta.env.VITE_BASE_API}/api/todos/${body.id}`,
+                `${process.env.VITE_BASE_API}/api/todos/${body.id}`,
                 body,
                 { headers: { Authorization: `Bearer ${token}` }}
             )
@@ -53,7 +53,7 @@ export const deleteTodo = createAsyncThunk(
         try {
             const token = thunkAPI.getState().auth.user.token
             const response = await axios.delete(
-                `${import.meta.env.VITE_BASE_API}/api/todos/${id}`,
+                `${process.env.VITE_BASE_API}/api/todos/${id}`,
                 { headers: { Authorization: `Bearer ${token}` }}
             )
             
