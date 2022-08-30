@@ -46,7 +46,7 @@ export const createActivity = createAsyncThunk(
                 { headers: { Authorization: `Bearer ${token}` }}
             )
 
-            if (response.data) thunkAPI.dispatch(getActivities())
+            if (response.data) await thunkAPI.dispatch(getActivities())
 
             return response.data
         } catch (error) {
@@ -68,7 +68,7 @@ export const updateActivity = createAsyncThunk(
                 { headers: { Authorization: `Bearer ${token}` }}
             )
 
-            if (response.data) thunkAPI.dispatch(getActivityDetail({ id: body.id }))
+            if (response.data) await thunkAPI.dispatch(getActivityDetail({ id: body.id }))
 
             return response.data
         } catch (error) {
@@ -89,7 +89,7 @@ export const deleteActivity = createAsyncThunk(
                 { headers: { Authorization: `Bearer ${token}` }}
             )
 
-            if (response.data) thunkAPI.dispatch(getActivities())
+            if (response.data) await thunkAPI.dispatch(getActivities())
 
             return response.data
         } catch (error) {
