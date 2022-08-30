@@ -7,7 +7,7 @@ export const getActivities = createAsyncThunk(
         try {
             const token = thunkAPI.getState().auth.user.token
             const response = await axios.get(
-                `${process.env.REACT_APP_BASE_API}/api/activities`,
+                `${import.meta.env.VITE_BASE_API}/api/activities`,
                 { headers: { Authorization: `Bearer ${token}` }}
             )
             
@@ -24,7 +24,7 @@ export const getActivityDetail = createAsyncThunk(
     'activity/detail',
     async ({ id }, thunkAPI) => {
         try {
-            const response = await axios.get(`${process.env.REACT_APP_BASE_API}/api/activities/${id}`)
+            const response = await axios.get(`${import.meta.env.VITE_BASE_API}/api/activities/${id}`)
 
             return response.data
         } catch (error) {
@@ -41,7 +41,7 @@ export const createActivity = createAsyncThunk(
         try {
             const token = thunkAPI.getState().auth.user.token
             const response = await axios.post(
-                `${process.env.REACT_APP_BASE_API}/api/activities`,
+                `${import.meta.env.VITE_BASE_API}/api/activities`,
                 { name: 'New Activity' },
                 { headers: { Authorization: `Bearer ${token}` }}
             )
@@ -63,7 +63,7 @@ export const updateActivity = createAsyncThunk(
         try {
             const token = thunkAPI.getState().auth.user.token
             const response = await axios.put(
-                `${process.env.REACT_APP_BASE_API}/api/activities/${body.id}`,
+                `${import.meta.env.VITE_BASE_API}/api/activities/${body.id}`,
                 body,
                 { headers: { Authorization: `Bearer ${token}` }}
             )
@@ -85,7 +85,7 @@ export const deleteActivity = createAsyncThunk(
         try {
             const token = thunkAPI.getState().auth.user.token
             const response = await axios.delete(
-                `${process.env.REACT_APP_BASE_API}/api/activities/${id}`,
+                `${import.meta.env.VITE_BASE_API}/api/activities/${id}`,
                 { headers: { Authorization: `Bearer ${token}` }}
             )
 
