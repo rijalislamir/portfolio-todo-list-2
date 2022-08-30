@@ -16,7 +16,8 @@ const ActivityDetail = () => {
     const location = useLocation()
     const navigate = useNavigate()
 
-    const { detail, isLoading } = useSelector(state => state.activity)
+    const { detail, isLoading: activityIsLoading } = useSelector(state => state.activity)
+    const { isLoading: todoIsLoading } = useSelector(state => state.todo)
     const [edit, setEdit] = useState(false)
     const [name, setName] = useState('')
     const [showEditModal, setShowEditModal] = useState(false)
@@ -122,14 +123,17 @@ const ActivityDetail = () => {
 
     return (
         <section className='container'>
-            {isLoading
+            {activityIsLoading || todoIsLoading
                 ? <div className='spinner-container'><MoonLoader cssOverride={{ margin: "0 auto" }} loading /></div>
                 : <>
                     <div className='activity-header'>
                         <span className='back-icon' onClick={handleGoBack}></span>
                         {edit
                             ? <input type='text' className='activity-name-input' value={name} onChange={handleOnchangeName} ref={inputRef} />
-                            : <h2 onClick={() => setEdit(prevState => !prevState)}>{detail.name}</h2>
+                            : <div className='activity-name'>
+                                <h2>{detail.name}</h2>
+                                <span className="edit-icon" onClick={() => setEdit(prevState => !prevState)}></span>
+                            </div>
                         }
                         <span className='plus-icon' onClick={handleCreateTodo}></span>
                     </div>
@@ -146,7 +150,7 @@ const ActivityDetail = () => {
                                 <div className='todo-item-edit'>
                                     <input type="checkbox" name="done" checked={todo.done} onChange={() => handleOnchangeCheckBox(todo)} />
                                     <span className={handlePriority(todo.priority)}></span>
-                                    <h3>{todo.name}</h3>
+                                    <h3 className={todo.done ? 'done-todo' : ''}>{todo.name}</h3>
                                     <span className='edit-icon' onClick={e => handleOpenEditModal(e, todo)}></span>
                                 </div>
 

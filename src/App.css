@@ -62,6 +62,15 @@ nav {
     border: 3px solid black;
 }
 
+.activity-item-name {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: calc(100%);
+}
+
 .add-activity {
     background-color: black;
     border: 3px dashed black;
@@ -158,6 +167,12 @@ input:-webkit-autofill:active{
     align-items: center;
     justify-content: space-between;
     padding: 1rem 0;
+    gap: 1rem;
+}
+
+.activity-name {
+    display: flex;
+    align-items: center;
     gap: 1rem;
 }
 
@@ -342,7 +357,10 @@ input.activity-name-input:focus {
 }
 
 input[type=checkbox] {
+    accent-color: #000000;
     cursor: pointer;
+    height: 18px;
+    width: 18px;
 }
 
 .edit-form-modal {
@@ -408,6 +426,11 @@ input[type=checkbox] {
     display: flex;
     align-items: center;
     height: calc(100vh - 125px - 2rem);
+}
+
+.done-todo {
+    color: #aaaaaa;
+    text-decoration: line-through;
 }
 
 @media (max-width: 768px) {

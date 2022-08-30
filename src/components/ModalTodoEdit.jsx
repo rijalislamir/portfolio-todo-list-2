@@ -39,13 +39,15 @@ const ModalTodoEdit = ({ show, onClose, todo }) => {
   }
 
   const handleUpdateTodo = () => {
-    dispatch(updateTodo({
-      id: todo._id,
-      activity: todo.activity,
-      priority,
-      name,
-      done
-    }))
+    if (name !== todo.name || priority !== todo.priority || done !== todo.done) {
+      dispatch(updateTodo({
+        id: todo._id,
+        activity: todo.activity,
+        priority,
+        name,
+        done
+      }))
+    }
     setShowPriorityOptions(false)
     onClose()
   }
