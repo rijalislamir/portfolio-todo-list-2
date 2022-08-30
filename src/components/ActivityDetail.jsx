@@ -3,10 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getActivityDetail, updateActivity } from '../store/activity/action'
 import { reset as activityReset } from '../store/activity/reducer'
-import {
-    createTodo,
-    updateTodo
-} from '../store/todo/action'
+import { createTodo, updateTodo } from '../store/todo/action'
+
 import { MoonLoader } from 'react-spinners'
 import ModalTodoEdit from './ModalTodoEdit'
 import ModalTodoDelete from './ModalTodoDelete'
@@ -18,6 +16,7 @@ const ActivityDetail = () => {
 
     const { detail, isLoading: activityIsLoading } = useSelector(state => state.activity)
     const { isLoading: todoIsLoading } = useSelector(state => state.todo)
+
     const [edit, setEdit] = useState(false)
     const [name, setName] = useState('')
     const [showEditModal, setShowEditModal] = useState(false)
@@ -52,17 +51,11 @@ const ActivityDetail = () => {
         if (edit) inputRef.current.focus()
     }, [edit])
     
-    const handleOnchangeName = e => {
-        setName(e.target.value)
+    const handleGoBack = () => {
+        dispatch(activityReset())
+        navigate('/')
     }
-
-    const handleClickOutsideInput = e => {
-        if (inputRef.current !== null && !inputRef.current.contains(e.target)) {
-            setEdit(prevState => !prevState)
-            if (name !== detail.name) dispatch(updateActivity({ id: detail._id, name }))
-        }
-    }
-
+    
     const handleCreateTodo = () => {
         dispatch(createTodo({
             name: 'New Todo',
@@ -72,17 +65,27 @@ const ActivityDetail = () => {
         }))
     }
 
+    const handleToggleEditName = () => setEdit(prevState => !prevState)
+
+    const handleOnchangeName = e => setName(e.target.value)
+
+    const handleClickOutsideInput = e => {
+        if (inputRef.current !== null && !inputRef.current.contains(e.target)) {
+            setEdit(prevState => !prevState)
+            if (name !== detail.name) dispatch(updateActivity({ id: detail._id, name }))
+        }
+    }
+
+    const handleOnchangeCheckBox = todo => {
+        dispatch(updateTodo({ id: todo._id, activity: todo.activity, done: !todo.done }))
+    }
+
     const handlePriority = priority => {
         if (priority === 'very-high') return 'priority-indicator red'
         if (priority === 'high') return 'priority-indicator orange'
         if (priority === 'medium') return 'priority-indicator green'
         if (priority === 'low') return 'priority-indicator blue'
         if (priority === 'very-low') return 'priority-indicator purple'
-    }
-
-    const handleGoBack = () => {
-        dispatch(activityReset())
-        navigate('/')
     }
 
     const handleOpenDeleteModal = (e, todo) => {
@@ -117,10 +120,6 @@ const ActivityDetail = () => {
         setShowEditModal(false)
     }
 
-    const handleOnchangeCheckBox = todo => {
-        dispatch(updateTodo({ id: todo._id, activity: todo.activity, done: !todo.done }))
-    }
-
     return (
         <section className='container'>
             {activityIsLoading || todoIsLoading
@@ -132,7 +131,7 @@ const ActivityDetail = () => {
                             ? <input type='text' className='activity-name-input' value={name} onChange={handleOnchangeName} ref={inputRef} />
                             : <div className='activity-name'>
                                 <h2>{detail.name}</h2>
-                                <span className="edit-icon" onClick={() => setEdit(prevState => !prevState)}></span>
+                                <span className="edit-icon" onClick={handleToggleEditName}></span>
                             </div>
                         }
                         <span className='plus-icon' onClick={handleCreateTodo}></span>
@@ -161,20 +160,20 @@ const ActivityDetail = () => {
                             </div>
                         )}
                     </div>
+
+                    <ModalTodoEdit
+                        show={showEditModal}
+                        onClose={handleCloseEditModal}
+                        todo={selectedTodo}
+                    />
+                    
+                    <ModalTodoDelete
+                        show={showDeleteModal}
+                        onClose={handleCloseDeleteModal}
+                        todo={selectedTodo}
+                    />
                 </>
             }
-
-            <ModalTodoEdit
-                show={showEditModal}
-                onClose={handleCloseEditModal}
-                todo={selectedTodo}
-            />
-            
-            <ModalTodoDelete
-                show={showDeleteModal}
-                onClose={handleCloseDeleteModal}
-                todo={selectedTodo}
-            />
         </section>
     )
 }
