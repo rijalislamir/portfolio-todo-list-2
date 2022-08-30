@@ -7,7 +7,7 @@ const ModalTodoDelete = ({ show, onClose, todo }) => {
   const dispatch = useDispatch()
   
   const handleDeleteTodo = () => {
-    dispatch(deleteTodo({ id: todo.id }))
+    dispatch(deleteTodo({ id: todo._id, activity: todo.activity }))
     onClose()
   }
 

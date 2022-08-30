@@ -49,7 +49,7 @@ export const updateTodo = createAsyncThunk(
 
 export const deleteTodo = createAsyncThunk(
     'todo/delete',
-    async ({ id }, thunkAPI) => {
+    async ({ id, activity }, thunkAPI) => {
         try {
             const token = thunkAPI.getState().auth.user.token
             const response = await axios.delete(
@@ -57,8 +57,7 @@ export const deleteTodo = createAsyncThunk(
                 { headers: { Authorization: `Bearer ${token}` }}
             )
             
-            const activityId = thunkAPI.getState().activity.detail._id
-            if (response.data) thunkAPI.dispatch(getActivityDetail({ id: activityId }))
+            if (response.data) thunkAPI.dispatch(getActivityDetail({ id: activity }))
             
             return response.data
         } catch (error) {

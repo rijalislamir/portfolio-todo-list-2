@@ -4,12 +4,13 @@ import { Link, useNavigate } from 'react-router-dom'
 import { login } from '../store/auth/action'
 import { reset as authReset } from '../store/auth/reducer'
 import Header from '../components/Header'
+import { BeatLoader } from 'react-spinners'
 
 const Login = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const { user, isError, message } = useSelector(state => state.auth)
+    const { user, isLoading, isError, message } = useSelector(state => state.auth)
     const [showPassword, setShowPassword] = useState('password')
 
     useEffect(() => {
@@ -72,7 +73,21 @@ const Login = () => {
                     {isError && <div className='error-message'>{message}</div>}
 
                     <div className='submit-form'>
-                        <button className='dark-btn' type='submit'>Login</button>
+                        <button className={isLoading ? 'dark-btn-disabled' : 'dark-btn'} type='submit'>
+                            {isLoading 
+                                ? <BeatLoader 
+                                    cssOverride={{ 
+                                        margin: 'auto',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center'
+                                    }}
+                                    color='#ffffff'
+                                    loading
+                                />
+                                : 'Login'
+                            }
+                        </button>
                         <p>Don't have an account? <b><Link to='/register'>Register</Link></b></p>
                     </div>
                 </form>

@@ -123,7 +123,7 @@ const ActivityDetail = () => {
     return (
         <section className='container'>
             {isLoading
-                ? <MoonLoader cssOverride={{ margin: "0 auto" }} loading />
+                ? <div className='spinner-container'><MoonLoader cssOverride={{ margin: "0 auto" }} loading /></div>
                 : <>
                     <div className='activity-header'>
                         <span className='back-icon' onClick={handleGoBack}></span>

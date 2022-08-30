@@ -52,7 +52,7 @@ const ActivityList = () => {
     return (
         <section className='container'>
             {isLoading
-                ? <MoonLoader cssOverride={{ margin: "0 auto" }} loading />
+                ? <div className='spinner-container'><MoonLoader cssOverride={{ margin: "0 auto" }} loading /></div>
                 : <>
                     <h2 className='page-title'>Activity</h2>
                     <div className="activity-list">

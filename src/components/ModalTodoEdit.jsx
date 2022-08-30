@@ -29,7 +29,6 @@ const ModalTodoEdit = ({ show, onClose, todo }) => {
   }, [])
 
   const handleOnclickOutsidePriority = e => {
-    console.log('masik')
     if (priorityRef.current !== null && !priorityRef.current.contains(e.target)) {
       setShowPriorityOptions(false)
     }

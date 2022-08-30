@@ -4,12 +4,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { registerUser } from '../store/auth/action'
 import { reset as authReset } from '../store/auth/reducer'
 import Header from '../components/Header'
+import { BeatLoader} from 'react-spinners'
 
 const Register = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const { user, isError, message } = useSelector(state => state.auth)
+    const { user, isLoading, isError, message } = useSelector(state => state.auth)
     const [showPassword, setShowPassword] = useState('password')
 
     useEffect(() => {
@@ -97,7 +98,21 @@ const Register = () => {
                     {isError && <div className='error-message'>{message}</div>}
 
                     <div className='submit-form'>
-                        <button className='dark-btn' type='submit'>Register</button>
+                        <button className={isLoading ? 'dark-btn-disabled' : 'dark-btn'} type='submit'>
+                        {isLoading 
+                                ? <BeatLoader 
+                                    cssOverride={{ 
+                                        margin: 'auto',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center'
+                                    }}
+                                    color='#ffffff'
+                                    loading
+                                />
+                                : 'Register'
+                            }
+                        </button>
                         <p>Have an account? <Link to='/login'><b>Login</b></Link></p>
                     </div>
                 </form>
